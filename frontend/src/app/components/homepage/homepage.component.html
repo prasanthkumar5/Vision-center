@@ -1,0 +1,9 @@
+<div class="homepage-layout">
+  <app-sidebar *ngIf="isLoggedIn"></app-sidebar>
+  <div class="main-content-wrapper" [class.full-width]="!isLoggedIn">
+    <app-header *ngIf="isLoggedIn"></app-header>
+    <main class="content-area" [style.padding]="isLoggedIn ? '24px 32px' : '0'">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

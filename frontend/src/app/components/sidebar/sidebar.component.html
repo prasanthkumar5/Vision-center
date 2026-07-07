@@ -1,0 +1,46 @@
+<aside class="sidebar" *ngIf="currentUser">
+  <div class="brand">
+    <div class="logo-icon">
+      <span class="material-symbols-rounded">visibility</span>
+    </div>
+    <div class="brand-text">
+      <h1 class="brand-title">Vision Care</h1>
+      <span class="brand-subtitle">Medical Admin</span>
+    </div>
+  </div>
+
+  <nav class="nav-menu">
+    <a routerLink="/patients" routerLinkActive="active" class="nav-item">
+      <span class="material-symbols-rounded icon">group</span>
+      <span class="label">Patients</span>
+    </a>
+    <a routerLink="/patient-intake" routerLinkActive="active" class="nav-item">
+      <span class="material-symbols-rounded icon">person_add</span>
+      <span class="label">Add Patient</span>
+    </a>
+    <a href="#" class="nav-item">
+      <span class="material-symbols-rounded icon">calendar_today</span>
+      <span class="label">Appointments</span>
+    </a>
+    <a href="#" class="nav-item">
+      <span class="material-symbols-rounded icon">inventory_2</span>
+      <span class="label">Inventory</span>
+    </a>
+    <a href="#" class="nav-item">
+      <span class="material-symbols-rounded icon">payments</span>
+      <span class="label">Billing</span>
+    </a>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="user-profile">
+      <div class="avatar" style="background: var(--primary-light); color: var(--primary); display: flex; align-items: center; justify-content: center; font-weight: bold; border-radius: 50%;">
+        {{ initials }}
+      </div>
+      <div class="user-info">
+        <span class="user-name">{{ currentUser.name }}</span>
+        <span class="user-role">{{ currentUser.role }}</span>
+      </div>
+    </div>
+  </div>
+</aside>
