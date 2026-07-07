@@ -1,0 +1,439 @@
+:host {
+  display: block;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  color: #334155;
+  background-color: #f8fafc;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.patient-intake-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 100%;
+}
+
+/* Header Section */
+.intake-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  padding: 20px 24px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  border-left: 4px solid #1e40af;
+}
+
+.header-info {
+  display: flex;
+  gap: 48px;
+}
+
+.header-block {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.header-block .label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #64748b;
+  letter-spacing: 0.5px;
+}
+
+.patient-name {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.status-badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: inline-block;
+  align-self: flex-start;
+}
+
+.status-badge.in-progress {
+  background-color: #ccfbf1;
+  color: #0f766e;
+}
+
+.clinician-name {
+  font-size: 14px;
+  color: #475569;
+}
+
+.header-alerts {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #dc2626;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.header-alerts .alert-icon {
+  font-size: 18px;
+}
+
+/* Main Content Grid */
+.main-content-grid {
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  gap: 24px;
+}
+
+.left-column,
+.right-column {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Cards */
+.card {
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+.full-height-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  border-bottom: 1px solid #e2e8f0;
+  background-color: #f8fafc;
+}
+
+.card-header.flex-between {
+  justify-content: space-between;
+}
+
+.card-header .header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.card-header h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.card-icon {
+  color: #3b82f6;
+  font-size: 20px;
+}
+
+.card-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+}
+
+/* Form Styles */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-row {
+  display: flex;
+  gap: 16px;
+}
+
+.form-row .form-group {
+  flex: 1;
+}
+
+.form-group label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #475569;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  padding: 10px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #334155;
+  outline: none;
+  transition: border-color 0.2s;
+  font-family: inherit;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.form-group textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.notes-group {
+  margin-top: 24px;
+  flex: 1;
+  display: flex;
+}
+
+.notes-group textarea {
+  flex: 1;
+}
+
+/* Billing specific */
+.balance-due-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.balance-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #475569;
+}
+
+.balance-amount {
+  font-size: 16px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+/* Rx Table specific */
+.rx-table {
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.rx-header-row {
+  display: grid;
+  grid-template-columns: 80px 1fr 1fr 1fr 1fr 1fr;
+  background-color: #f1f5f9;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.rx-body-row {
+  display: grid;
+  grid-template-columns: 80px 1fr 1fr 1fr 1fr 1fr;
+  border-bottom: 1px solid #e2e8f0;
+  background-color: white;
+}
+
+.rx-body-row:last-child {
+  border-bottom: none;
+}
+
+.rx-cell {
+  padding: 12px;
+  border-right: 1px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+}
+
+.rx-cell:last-child {
+  border-right: none;
+}
+
+.rx-header-row .rx-cell {
+  font-size: 12px;
+  font-weight: 700;
+  color: #1e293b;
+  text-transform: uppercase;
+}
+
+.rx-eye-label {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+
+.eye-type {
+  font-size: 14px;
+  font-weight: 600;
+  color: #3b82f6;
+}
+
+.eye-desc {
+  font-size: 12px;
+  color: #64748b;
+}
+
+.rx-cell input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  font-size: 13px;
+  text-align: center;
+  color: #334155;
+}
+
+.rx-cell input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+}
+
+/* Footer Section */
+.intake-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 24px;
+  border-top: 1px solid #e2e8f0;
+  margin-top: auto;
+}
+
+.footer-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.dot-separator {
+  margin: 0 4px;
+}
+
+.footer-right {
+  display: flex;
+  gap: 12px;
+}
+
+/* Buttons */
+button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 1px solid transparent;
+  font-family: inherit;
+}
+
+.primary-btn {
+  background-color: #0f3b8e;
+  color: white;
+}
+
+.primary-btn:hover {
+  background-color: #0b2b68;
+}
+
+.secondary-btn {
+  background-color: white;
+  border-color: #cbd5e1;
+  color: #334155;
+}
+
+.secondary-btn:hover {
+  background-color: #f8fafc;
+  border-color: #94a3b8;
+}
+
+.icon-small {
+  font-size: 18px;
+}
+
+/* --- Responsive Design --- */
+
+@media (max-width: 1024px) {
+  .main-content-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  :host {
+    padding: 16px;
+  }
+  
+  .header-info {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .intake-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+  
+  .header-alerts {
+    justify-content: flex-start;
+  }
+  
+  .rx-table {
+    overflow-x: auto;
+    display: block;
+    width: 100%;
+  }
+  
+  .rx-header-row, .rx-body-row {
+    min-width: 600px;
+  }
+  
+  .intake-footer {
+    flex-direction: column;
+    gap: 16px;
+    align-items: stretch;
+  }
+  
+  .footer-right {
+    flex-direction: column;
+  }
+  
+  .footer-right button {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .form-row {
+    flex-direction: column;
+    gap: 16px;
+  }
+}

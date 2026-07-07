@@ -1,0 +1,153 @@
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  /* Premium modern gradient for medical/health */
+  background: linear-gradient(135deg, #e0f2fe 0%, #bfdbfe 100%);
+  font-family: 'Inter', sans-serif;
+}
+
+.login-card {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  padding: 3.5rem;
+  border-radius: 24px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0,0,0,0.05);
+  width: 100%;
+  max-width: 440px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.brand {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.logo-icon {
+  width: 72px;
+  height: 72px;
+  background: var(--bg-active, #e0e7ff);
+  color: var(--primary-blue, #1a4a9c);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.25rem;
+  box-shadow: 0 4px 10px rgba(26, 74, 156, 0.15);
+}
+
+.logo-icon span {
+  font-size: 36px;
+}
+
+.brand-title {
+  font-size: 1.75rem;
+  color: var(--text-main, #1f2937);
+  margin: 0;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.brand-subtitle {
+  color: var(--text-muted, #6b7280);
+  font-size: 0.95rem;
+  margin-top: 0.5rem;
+}
+
+.form-group {
+  margin-bottom: 1.75rem;
+}
+
+label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-main, #1f2937);
+  margin-bottom: 0.5rem;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-wrapper span {
+  position: absolute;
+  left: 1.2rem;
+  color: var(--text-muted, #6b7280);
+  font-size: 20px;
+  transition: color 0.3s;
+}
+
+.input-wrapper input {
+  width: 100%;
+  padding: 0.875rem 1rem 0.875rem 3.5rem;
+  border: 2px solid var(--border-color, #e5e7eb);
+  border-radius: 12px;
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--text-main, #1f2937);
+  transition: all 0.2s ease-in-out;
+}
+
+.input-wrapper input:focus {
+  outline: none;
+  border-color: var(--primary-blue, #1a4a9c);
+  box-shadow: 0 0 0 4px rgba(26, 74, 156, 0.1);
+  background: #ffffff;
+}
+
+/* Add a beautiful primary button with fallback colors */
+.btn-primary {
+  width: 100%;
+  padding: 1rem;
+  background: var(--primary-blue, #1a4a9c);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 1.05rem;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 12px rgba(26, 74, 156, 0.2);
+  margin-top: 1rem;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--secondary-blue, #0b3b8c);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(26, 74, 156, 0.3);
+}
+
+.btn-primary:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.login-footer {
+  text-align: center;
+  margin-top: 2.5rem;
+  font-size: 0.85rem;
+  color: var(--text-muted, #6b7280);
+}
+
+.spinner {
+  width: 24px;
+  height: 24px;
+  border: 3px solid rgba(255,255,255,0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}

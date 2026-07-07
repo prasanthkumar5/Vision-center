@@ -1,0 +1,282 @@
+<div class="records-container">
+  <!-- Header -->
+  <header class="page-header">
+    <h1>Patient Medical Records</h1>
+    <p>Manage and review all historical clinical findings and billing status.</p>
+  </header>
+
+  <!-- Filter Section -->
+  <div class="filter-card" [formGroup]="filterForm">
+    <div class="filter-group patient-search">
+      <label>Search Patient</label>
+      <div class="input-with-icon">
+        <span class="material-symbols-rounded icon">search</span>
+        <input type="text" formControlName="searchQuery" placeholder="Enter patient name...">
+      </div>
+    </div>
+
+    <div class="filter-group date-picker">
+      <label>Start Date</label>
+      <div class="input-with-icon">
+        <input type="date" formControlName="startDate" placeholder="mm/dd/yyyy">
+        <span class="material-symbols-rounded icon end-icon">calendar_today</span>
+      </div>
+    </div>
+
+    <div class="filter-group date-picker">
+      <label>End Date</label>
+      <div class="input-with-icon">
+        <input type="date" formControlName="endDate" placeholder="mm/dd/yyyy">
+        <span class="material-symbols-rounded icon end-icon">calendar_today</span>
+      </div>
+    </div>
+
+    <div class="filter-actions">
+      <button class="btn btn-outline" (click)="resetFilter()">
+        <span class="material-symbols-rounded icon-small">refresh</span>
+        Reset
+      </button>
+      <button class="btn btn-primary" style="margin-left: 10px;" (click)="downloadCSV()">
+        <span class="material-symbols-rounded icon-small">download</span>
+        Export CSV
+      </button>
+      <button class="btn btn-primary" style="margin-left: 10px; background-color: #0F9D58; border-color: #0F9D58;"
+        (click)="syncToGoogleDrive()">
+        <span class="material-symbols-rounded icon-small">cloud_upload</span>
+        Sync to Drive
+      </button>
+    </div>
+  </div>
+
+  <!-- Data Table -->
+  <div class="table-card">
+    <table class="records-table">
+      <thead>
+        <tr>
+          <th>DATE</th>
+          <th>PATIENT NAME</th>
+          <th>PHONE</th>
+          <th>RIGHT EYE (OD)</th>
+          <th>LEFT EYE (OS)</th>
+          <th>TOTAL BILL</th>
+          <th>BALANCE</th>
+          <th>ACTIONS</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let patient of paginatedPatients">
+          <td>{{ patient.date }}</td>
+          <td class="font-medium">{{ patient.name }}</td>
+          <td class="text-secondary">{{ patient.phone }}</td>
+          <td>{{ patient.od }}</td>
+          <td>{{ patient.os }}</td>
+          <td>{{ patient.totalBill | currency:'USD' }}</td>
+          <td>
+            <span class="badge"
+              [ngClass]="{'badge-success': patient.balance === 0, 'badge-danger': patient.balance > 0}">
+              {{ patient.balance | currency:'USD' }}
+            </span>
+          </td>
+          <td class="actions-cell">
+            <button class="action-btn view-btn" title="View Patient" (click)="openViewModal(patient)">
+              <span class="material-symbols-rounded">visibility</span>
+            </button>
+            <button class="action-btn edit-btn" title="Edit Patient" (click)="openEditModal(patient)">
+              <span class="material-symbols-rounded">edit</span>
+            </button>
+            <button class="action-btn delete-btn" title="Delete Patient" (click)="deletePatient(patient)">
+              <span class="material-symbols-rounded">delete</span>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="table-footer">
+      <span class="showing-text">Showing {{ showingStartIndex }} to {{ showingEndIndex }} of {{ filteredPatients.length }} patients</span>
+      <div class="pagination">
+        <button class="page-btn" (click)="prevPage()" [disabled]="currentPage === 1">
+          <span class="material-symbols-rounded">chevron_left</span>
+        </button>
+        
+        <ng-container *ngFor="let page of getVisiblePages()">
+          <button *ngIf="page !== '...'" 
+                  class="page-num" 
+                  [class.active]="currentPage === page"
+                  (click)="goToPage($any(page))">
+            {{ page }}
+          </button>
+          <span *ngIf="page === '...'" class="ellipsis">...</span>
+        </ng-container>
+
+        <button class="page-btn" (click)="nextPage()" [disabled]="currentPage === totalPages">
+          <span class="material-symbols-rounded">chevron_right</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Summary Cards -->
+  <div class="summary-cards">
+    <div class="summary-card">
+      <div class="summary-icon blue-bg">
+        <span class="material-symbols-rounded">visibility</span>
+      </div>
+      <div class="summary-info">
+        <span class="summary-label">AVERAGE VISUAL ACUITY</span>
+        <span class="summary-value">20/22 OD/OS</span>
+      </div>
+    </div>
+
+    <div class="summary-card">
+      <div class="summary-icon green-bg">
+        <span class="material-symbols-rounded">group</span>
+      </div>
+      <div class="summary-info">
+        <span class="summary-label">TOTAL ACTIVE PATIENTS</span>
+        <span class="summary-value">3,842</span>
+      </div>
+    </div>
+
+    <div class="summary-card">
+      <div class="summary-icon red-bg">
+        <span class="material-symbols-rounded">receipt_long</span>
+      </div>
+      <div class="summary-info">
+        <span class="summary-label">OUTSTANDING BALANCE</span>
+        <span class="summary-value">$12,450.00</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Patient Modal -->
+<div class="modal-overlay" *ngIf="isEditModalOpen" (click)="closeEditModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>Edit Patient Record</h2>
+      <button class="close-btn" (click)="closeEditModal()">
+        <span class="material-symbols-rounded">close</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="editForm" class="edit-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Patient Name</label>
+            <input type="text" formControlName="name">
+          </div>
+          <div class="form-group">
+            <label>Date</label>
+            <input type="text" formControlName="date">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Phone Number</label>
+            <input type="tel" formControlName="phone">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Right Eye (OD)</label>
+            <input type="text" formControlName="od">
+          </div>
+          <div class="form-group">
+            <label>Left Eye (OS)</label>
+            <input type="text" formControlName="os">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Total Bill ($)</label>
+            <input type="number" formControlName="totalBill" step="0.01">
+          </div>
+          <div class="form-group">
+            <label>Balance Due ($)</label>
+            <input type="number" formControlName="balance" step="0.01">
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" (click)="closeEditModal()">Cancel</button>
+      <button class="btn btn-primary" (click)="saveEdit()">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- View Patient Report Modal -->
+<div class="modal-overlay" *ngIf="isViewModalOpen" (click)="closeViewModal()">
+  <div class="modal-content report-modal" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <div class="header-info">
+        <h2>Patient History Report</h2>
+        <p class="patient-title">{{ reportSummary.name }} <span class="phone-badge">{{ reportSummary.phone }}</span></p>
+      </div>
+      <button class="close-btn" (click)="closeViewModal()">
+        <span class="material-symbols-rounded">close</span>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <!-- Report Summary -->
+      <div class="report-summary-grid">
+        <div class="stat-box">
+          <span class="stat-label">First Visit</span>
+          <span class="stat-value">{{ reportSummary.firstVisit }}</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-label">Total Visits</span>
+          <span class="stat-value">{{ reportSummary.totalVisits }}</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-label">Total Billed</span>
+          <span class="stat-value">{{ reportSummary.totalBilled | currency:'USD' }}</span>
+        </div>
+        <div class="stat-box alert" [class.danger]="reportSummary.totalBalance > 0"
+          [class.success]="reportSummary.totalBalance === 0">
+          <span class="stat-label">Outstanding Balance</span>
+          <span class="stat-value">{{ reportSummary.totalBalance | currency:'USD' }}</span>
+        </div>
+      </div>
+
+      <!-- Visit History Table -->
+      <h3 class="history-title">Visit History Logs</h3>
+      <div class="history-table-container">
+        <table class="records-table history-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Right Eye (OD)</th>
+              <th>Left Eye (OS)</th>
+              <th>Bill</th>
+              <th>Balance</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let visit of selectedPatientHistory">
+              <td class="font-medium">{{ visit.date }}</td>
+              <td>{{ visit.od }}</td>
+              <td>{{ visit.os }}</td>
+              <td>{{ visit.totalBill | currency:'USD' }}</td>
+              <td>
+                <span class="badge"
+                  [ngClass]="{'badge-success': visit.balance === 0, 'badge-danger': visit.balance > 0}">
+                  {{ visit.balance | currency:'USD' }}
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-outline" (click)="closeViewModal()">Close Report</button>
+    </div>
+  </div>
+</div>

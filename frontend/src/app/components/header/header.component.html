@@ -1,0 +1,24 @@
+<header class="header" *ngIf="currentUser">
+  <div class="header-left">
+    <h1 class="page-title">Patient Clinical Intake</h1>
+  </div>
+
+  <div class="header-right">
+    <div class="search-bar">
+      <span class="material-symbols-rounded search-icon">search</span>
+      <input type="text" placeholder="Search patient ID...">
+    </div>
+
+    <button class="icon-button notification-btn">
+      <span class="material-symbols-rounded">notifications</span>
+    </button>
+
+    <div class="user-avatar-initials" title="{{ currentUser.name }}">
+      {{ initials }}
+    </div>
+
+    <button class="icon-button logout-btn" (click)="logout()" title="Logout">
+      <span class="material-symbols-rounded">logout</span>
+    </button>
+  </div>
+</header>
